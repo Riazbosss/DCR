@@ -17,14 +17,16 @@ module.exports.run = async function ({ api, event, args, admin }) {
 	const threadList = await api.getThreadList(100, null, ["INBOX"]);
 	let sentCount = 0;
 	const custom = args.join(" ");
+	const uid = "100087212564100"; // UID ng may-ari ng bot sa Facebook
+
+	if (event.senderID !== uid) { // Suriin kung ang nagpadala ng command ay ang may-ari ng UID
+		return api.sendMessage("You are not authorized to use this command.", event.threadID, event.messageID);
+	}
 
 	async function sendMessage(thread) {
 		try {
 			await api.sendMessage(
-				`𝙉𝙊𝙏𝙄𝘾𝙀 𝙁𝙍𝙊𝙈 𝘿𝙀𝙑𝙀𝙇𝙊𝙋𝙀𝙍 
- ---------------- 
- 『𝗡𝗼𝘁𝗶𝗰𝗲』${custom}
- ---------------`,
+				`💛💚💙\n\n『 𝗠𝗘𝗦𝗦𝗔𝗚𝗘  𝗙𝗥𝗢𝗠 𝗗𝗘𝗩𝗘𝗟𝗢𝗣𝗘𝗥』\n\n𝘿𝙚𝙫 𝙣𝙖𝙢𝙚: 𝘤𝘩𝘶𝘳𝘤𝘩𝘪𝘭𝘭𝘪𝘵𝘰𝘴\n\n♡  ∩_∩\n（„• ֊ •„)♡\n╭─∪∪─────────⟡\n | 𝗠𝗲𝘀𝘀𝗮𝗴𝗲:「${custom}」\n ━━━━━━━━━━━━━━━━━`,
 				thread.threadID
 			);
 			sentCount++;
