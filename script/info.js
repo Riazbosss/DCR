@@ -85,7 +85,7 @@ module.exports.run = async function({ api, event, args, prefix, admin }) {
 						body: `➢ Admin and Bot Information
 
 ⁂ Bot Name: ${BOTNAME}
-✧ Bot Admin: ${admin}
+✧ Bot Admin: 𝘊𝘩𝘶𝘳𝘤𝘩𝘪𝘭𝘭 𝘥𝘦𝘷
 ♛ Bot Admin Link: https://www.facebook.com/Churchill.Dev4100
 ❂ Bot Prefix: ${prefix}
 ✫ Files Owner: ${FILESOWNER}
