@@ -2,47 +2,47 @@ const axios = require('axios');
 const fs = require('fs-extra');
 
 module.exports.config = {
-  name: "Upscale",
-  version: "4.4",
-  hasPermssion: 0,
-  credits: "Hazeyy",
-  description: "( 𝚄𝚙𝚜𝚌𝚊𝚕𝚎 )",
-  commandCategory: "𝚗𝚘 𝚙𝚛𝚎𝚏𝚒𝚡",
-  usages: "( 𝚂𝚌𝚊𝚕𝚒𝚗𝚐 𝙸𝚖𝚊𝚐𝚎𝚜 )",
+  name: "upscale",
+  version: "1.0.",
+  role: 0,
+  hasPermision: 0,
+  credits: "cliff", //api by hazey
+  description: "enhance your photo ",
+  hasPrefix: false,
+  usePrefix: false,
+  commandCategory: "image",
+  usages: "[reply to image]",
   cooldowns: 2,
+  cooldown: 2,
+  aliases: ["rem","4k"],
+  usage: "replying photo"
 };
 
-module.exports.handleEvent = async function ({ api, event }) {
-  if (!(event.body.indexOf("upscale") === 0 || event.body.indexOf("Upscale") === 0)) return;
-  const args = event.body.split(/\s+/);
-  args.shift();
-
-  const pathie = __dirname + `/cache/zombie.jpg`;
+module.exports.run = async ({ api, event, args }) => {
+  let pathie = __dirname + `/../cache/remove_bg.jpg`;
   const { threadID, messageID } = event;
 
-  const photoUrl = event.messageReply.attachments[0] ? event.messageReply.attachments[0].url : args.join(" ");
+  let photoUrl = event.messageReply ? event.messageReply.attachments[0].url : args.join(" ");
 
   if (!photoUrl) {
-    api.sendMessage("🤖 𝙿𝚕𝚎𝚊𝚜𝚎 𝚛𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊 𝚙𝚑𝚘𝚝𝚘 𝚝𝚘 𝚙𝚛𝚘𝚌𝚎𝚎𝚍 𝚞𝚙𝚜𝚌𝚊𝚕𝚒𝚗𝚐 𝚒𝚖𝚊𝚐𝚎𝚜.", threadID, messageID);
+    api.sendMessage("📸 Please reply to a photo to process and remove backgrounds.", threadID, messageID);
     return;
   }
 
-  api.sendMessage("🕟 | 𝚄𝚙𝚜𝚌𝚊𝚕𝚒𝚗𝚐 𝙸𝚖𝚊𝚐𝚎, 𝙿𝚕𝚎𝚊𝚜𝚎 𝚠𝚊𝚒𝚝 𝚏𝚘𝚛 𝚊 𝚖𝚘𝚖𝚎𝚗𝚝..", threadID, async () => {
-    try {
-      const response = await axios.get(`https://hazee-upscale.replit.app/upscale?url=${encodeURIComponent(photoUrl)}&face_enhance=true`);
-      const processedImageURL = response.data.hazescale;
-      const img = (await axios.get(processedImageURL, { responseType: "arraybuffer" })).data;
+  try {
+    api.sendMessage("🕟 | Upscaling Image, Please wait for a moment..", threadID, messageID);
+    const response = await axios.get(`https://hazee-upscale.replit.app/upscale?url=${encodeURIComponent(photoUrl)}&face_enhance=true`);
+    const processedImageURL = response.data.hazescale;
 
-      fs.writeFileSync(pathie, Buffer.from(img, 'binary'));
+    const img = (await axios.get(processedImageURL, { responseType: "arraybuffer"})).data;
 
-      api.sendMessage({
-        body: "🔮 𝚄𝚙𝚜𝚌𝚊𝚕𝚎 𝚂𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢",
-        attachment: fs.createReadStream(pathie)
-      }, threadID, () => fs.unlinkSync(pathie), messageID);
-    } catch (error) {
-      api.sendMessage(`🚫 𝙴𝚛𝚛𝚘𝚛 𝚙𝚛𝚘𝚌𝚎𝚜𝚜𝚒𝚗𝚐 𝚒𝚖𝚊𝚐𝚎: ${error}`, threadID, messageID);
-    }
-  });
+    fs.writeFileSync(pathie, Buffer.from(img, 'binary'));
+
+    api.sendMessage({
+      body: "🔮 Image Successfully Enhanced",
+      attachment: fs.createReadStream(pathie)
+    }, threadID, () => fs.unlinkSync(pathie), messageID);
+  } catch (error) {
+    api.sendMessage(`Error processing image: ${error}`, threadID, messageID);
+  };
 };
-
-module.exports.run = async function ({ api, event }) {};
