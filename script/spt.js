@@ -6,7 +6,7 @@ module.exports.config = {
 		name: "spt",
 		version: "1.0.2",
 		role: 0,
-		credits: "cliff",
+		credits: "joshua deku",
 		description: "Play and Download music from Spotify",
 		hasPrefix: false,
 		cooldown: 5,
