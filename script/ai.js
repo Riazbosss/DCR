@@ -40,7 +40,7 @@ module.exports.run = async function ({ api, event, args }) {
         apiName = 'Backup Axios';
     }
 
-    if (!content) return api.sendMessage("_________Alane by Riaz_______\n\nJe suis Alane🤖🤖🤖, une IA développée par Riaz.\n\nPosez vos questions en toute quiétude ☺️🤖.\n\n Par exemple: Ai quelle est la vitesse du son? _________Créée par Riaz______ ", event.threadID, event.messageID);
+    if (!content) return api.sendMessage("_________Alane by Riaz_______\n\nJe suis Alane🤖🤖🤖, une IA développée par Riaz.\n\nPosez vos questions en toute quiétude ☺️🤖.\n\n Par exemple: Ai quelle est la vitesse du son?\n\n _________Créée par Riaz______ ", event.threadID, event.messageID);
 
     try {
         api.sendMessage(`je viens...`, event.threadID, event.messageID);
@@ -61,7 +61,7 @@ module.exports.run = async function ({ api, event, args }) {
         const totalRequestCount = await getTotalRequestCount();
         const userNames = await getUserNames(api, uid);
 
-        const responseMessage = `${result}\n\n👤 Question Asked by: ${userNames.join(', ')}\n\n𝐜𝐫𝐞𝐝𝐢𝐭𝐬: https://www.facebook.com/Churchill.Dev4100`;
+        const responseMessage = `${result}\n\n👤 Question Asked by: ${userNames.join(', ')}\n\n𝐜𝐫𝐞𝐝𝐢𝐭𝐬: By Riaz Capriati DADO `;
         api.sendMessage(responseMessage, event.threadID, event.messageID);
 
         await saveAxiosStatus(apiName);
